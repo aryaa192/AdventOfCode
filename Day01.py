@@ -7,7 +7,7 @@ if __name__ == "__main__":
         lis.append(i)
     for i in range(1,len(lis)):
         if lis[i] > lis[i-1]:
-            c += 1
+            count += 1
             break
         else:
             break
