@@ -6,15 +6,7 @@ if __name__ == "__main__":
     X = 0
     Y = 0
     Aim = 0
-    data =  open(r"C:\Users\ACER\OneDrive\Documents\Python-Workspace\BASICS\day2.txt", 'r')
-    """
-    forward 5
-    down 5
-    forward 8
-    up 3
-    down 8
-    forward 2
-    """
+    data =  open(r"day2.txt", 'r')
     for line in data:
         items = line.rstrip('\n').split(' ')
         key = items[0]
