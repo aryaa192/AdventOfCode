@@ -5,11 +5,10 @@ if __name__ == "__main__":
     # Y variable indicates moving up/down from it's initial sea level.
     X = 0
     Y = 0
-    data =  open(r"C:\Users\ACER\OneDrive\Documents\Python-Workspace\BASICS\day2.txt", 'r')
+    data =  open(r"day2.txt", 'r')
     for line in data:
         items = line.rstrip('\n').split(' ')
-        key = items[0]
-        values = items[1]
+        key, values = items[0], items[1]
         if key == "forward":
             X += int(values)
         elif key == "down":
