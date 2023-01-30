@@ -13,6 +13,7 @@
 # import section
 import sys
 from string import ascii_uppercase
+import copy
 
 # Global declaration 
 CRATES = list(ascii_uppercase)
@@ -37,22 +38,22 @@ def crate_mover_9000(stacks, moves):
     for _ in range(count):
         v = stacks[src].pop()
         stacks[dest].append(v)
+
+    
         
     return stacks
 
 # Part 2
-# def crate_mover_9001(stacks, moves):
-#     new_stacks = stacks
-#     count, src, dest = int(moves[1]), int(moves[3])-1, int(moves[5])-1
+def crate_mover_9001(stacks, moves):
+    count, src, dest = int(moves[1]), int(moves[3])-1, int(moves[5])-1
     #   move 1 from 2 to 1
-    #   move 3 from 1 to 3
-    #   move 2 from 2 to 1
-    #   move 1 from 1 to 2
-#     temp = new_stacks[src][count-1:] | stacks[1][1-1:] 
-#     del new_stacks[src][count:]
-#     new_stacks[dest].extend(temp)
-#     print(temp)
-#     return new_stacks
+    temp = []
+    for _ in range(count):
+        temp.append(stacks[src].pop())
+    temp = reversed(temp)
+    stacks[dest].extend(temp)
+    print(stacks[dest])
+    return stacks
 
 
 def get_crates(crates, stacks_dic):
@@ -91,28 +92,34 @@ if __name__ == '__main__':
         lines = file.readlines()
         size_of_stacks = len(lines[0])//4
     file.close()
+    print(size_of_stacks)
     # Create stack dictionary to store crates to respective stack positions.
     stacks_dic = {i: [] for i in range(int(size_of_stacks))}
     
     # get all the crates using function get_crates().
     stacks = get_crates(lines[:size_of_stacks], stacks_dic)
+    
 
     # reverse the order of crates as per the condition given.
     for key in stacks:
         stacks[key] = list(reversed(stacks[key]))
-    
+
+    stacks_2 = copy.deepcopy(stacks)
     # fetch the moves and parse to get last stack by each
     move_list = lines[size_of_stacks+2:]
     for move in move_list:
         m = move.strip("\n").split(" ")
         getLastStacks_p1 = crate_mover_9000(stacks, m)
-        # getLastStacks_p2 = crate_mover_9001(stacks, m)
+        getLastStacks_p2 = crate_mover_9001(stacks_2, m)
 
     
     # Get the last crates from each stacks available after re-arrangement.
-    last_crates_in_stack = ""
+    last_crates_in_stack_p1 = ""
+    last_crates_in_stack_p2 = ""
     for key in getLastStacks_p1:
-        last_crates_in_stack += getLastStacks_p1[key][-1]
+        last_crates_in_stack_p1 += getLastStacks_p1[key][-1]
     
+    for key in getLastStacks_p2:
+        last_crates_in_stack_p2 += getLastStacks_p2[key][-1]
     # Print the outcome.
-    print(last_crates_in_stack)
+    print(last_crates_in_stack_p1, last_crates_in_stack_p2)
