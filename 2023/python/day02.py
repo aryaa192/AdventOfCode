@@ -1,8 +1,11 @@
+# Author: Amit Arya
+# Date: 20th Dec'23.
 
 
+# import section.
 import sys
 
-
+# applied logic for given circumstances in part-1
 def sum_of_rounds(game_data):
     red_target = 12
     green_target = 13
@@ -10,16 +13,14 @@ def sum_of_rounds(game_data):
 
     total_rounds = 0
     for rounds, info in game_data.items():
-        #print(rounds, info)
         for _ in info.items():
             if info['red'] <= red_target and info['blue'] <= blue_target and info['green'] <= green_target:
-                print(rounds)
                 total_rounds += int(''.join(filter(str.isdigit, rounds)))
                 break
 
     return total_rounds
 
-
+# checking sub-rounds containing the counts of each cubes by evaluating the max value in each round.
 def count_cubes(game_str):
     cube_counts = {"red": 0, "blue": 0, "green": 0}
     rounds = game_str.split(';')
@@ -28,10 +29,12 @@ def count_cubes(game_str):
         cubes = round_info.split(', ')
         for cube in cubes:
             count, color = cube.split()
-            cube_counts[color] += int(count)
+            if cube_counts[color] <= int(count):
+                cube_counts[color] = int(count)
     
     return cube_counts
 
+# resturcture of data.
 def extract_input(game_str):
     # expecting:
     # input: "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
@@ -42,6 +45,7 @@ def extract_input(game_str):
     return game_data
 
 
+# input data reading
 def parse_input(argv):
     file = ""
     if len(argv) < 2:
@@ -60,20 +64,16 @@ def parse_input(argv):
     return file
 
 
-if __name__ == "__main__":
-    
-    # game_input = [
-    # "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green",
-    # "Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue",
-    # "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red",
-    # "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red",
-    # "Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green" 
-    # ]
-    
+# entry point of program.
+if __name__ == "__main__":    
     game_input = parse_input(sys.argv)
     
     game_data = {}
     for game_str in game_input:
         game_data.update(extract_input(game_str))
-
+    
+    # Part1 output.
+    out_file = open('outputs/day02.output', 'w', encoding='utf-8')
+    out_file.write(str(sum_of_rounds(game_data)))
+    out_file.close()
     print(sum_of_rounds(game_data))
