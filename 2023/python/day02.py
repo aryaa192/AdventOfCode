@@ -20,6 +20,22 @@ def sum_of_rounds(game_data):
 
     return total_rounds
 
+# applied logic for given circumstance in part-2
+def total_minimum_sets_of_cubes(game_data):
+    total_cubes_set = 0
+    
+    for _, info in game_data.items():
+        min_cube_count = 1
+        for v in info.values():
+            # print(v)
+            min_cube_count *= v
+            # print(min_cube_count)
+        total_cubes_set += min_cube_count
+
+    return total_cubes_set 
+
+
+
 # checking sub-rounds containing the counts of each cubes by evaluating the max value in each round.
 def count_cubes(game_str):
     cube_counts = {"red": 0, "blue": 0, "green": 0}
@@ -72,8 +88,10 @@ if __name__ == "__main__":
     for game_str in game_input:
         game_data.update(extract_input(game_str))
     
-    # Part1 output.
+    # Part1-2 output.
     out_file = open('outputs/day02.output', 'w', encoding='utf-8')
-    out_file.write(str(sum_of_rounds(game_data)))
+    out_file.write(str(sum_of_rounds(game_data))+"\n")
+    out_file.write(str(total_minimum_sets_of_cubes(game_data))+"\n")
     out_file.close()
     print(sum_of_rounds(game_data))
+    print(total_minimum_sets_of_cubes(game_data))
