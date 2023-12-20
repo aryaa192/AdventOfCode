@@ -27,9 +27,7 @@ def total_minimum_sets_of_cubes(game_data):
     for _, info in game_data.items():
         min_cube_count = 1
         for v in info.values():
-            # print(v)
             min_cube_count *= v
-            # print(min_cube_count)
         total_cubes_set += min_cube_count
 
     return total_cubes_set 
